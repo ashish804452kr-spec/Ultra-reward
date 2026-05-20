@@ -1,1 +1,237 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Reward App</title>
+    
+    <style>
+        /* पूरे पेज की सेटिंग */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #0d0e15;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* मोबाइल स्क्रीन का साइज और बैकग्राउंड */
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            height: 100vh;
+            background: linear-gradient(180deg, #141622 0%, #0d0e15 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ऊपरी हेडर बार */
+        .header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00f2fe;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #00f2fe;
+            text-shadow: 0 0 10px #00f2fe;
+        }
+
+        /* पॉइंट्स दिखाने वाला बॉक्स */
+        .balance-box {
+            background: #1e2235;
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid #00f2fe;
+        }
+
+        #points-display {
+            color: #4facfe;
+            font-size: 18px;
+        }
+
+        /* बीच की स्क्रीन का कंटेंट */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 20px;
+        }
+
+        .welcome-text {
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* चमकदार नियॉन बटन */
+        .reward-btn {
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            color: #000000;
+            border: none;
+            padding: 12px 25px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 0 15px #00f2fe;
+            transition: 0.3s;
+            margin-bottom: 30px;
+            width: 80%;
+        }
+
+        .reward-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* टाइप करने वाले बॉक्स का डिब्बा (Input Area) */
+        .input-section {
+            width: 85%;
+            background: #141622;
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #1e2235;
+            text-align: center;
+        }
+
+        .input-section label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #888888;
+        }
+
+        /* असली टाइप करने वाला बॉक्स */
+        .text-input {
+            width: 90%;
+            padding: 12px;
+            background: #0d0e15;
+            border: 1px solid #00f2fe;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        /* सबमिट करने वाला बटन */
+        .submit-btn {
+            background: #1e2235;
+            color: #00f2fe;
+            border: 1px solid #00f2fe;
+            padding: 8px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .submit-btn:active {
+            background: #00f2fe;
+            color: #000000;
+        }
+
+        /* नीचे की नेविगेशन पट्टी */
+        .footer-nav {
+            height: 60px;
+            background: #141622;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #1e2235;
+        }
+
+        .nav-item {
+            background: none;
+            border: none;
+            color: #888888;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: #00f2fe;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <div class="header">
+            <h2>Ultra Reward</h2>
+            <div class="balance-box">
+                <span>पॉइंट्स: </span>
+                <strong id="points-display">100</strong>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <p class="welcome-text">नमस्ते अल्ट्रा लेजेंड! टास्क पूरे करें और इनाम जीतें।</p>
+            
+            <button class="reward-btn" id="daily-claim-btn">रोजाना का इनाम (+50 पॉइंट्स)</button>
+
+            <div class="input-section">
+                <label for="user-text">यहाँ अपना नाम या प्रोमो कोड लिखें:</label>
+                <input type="text" id="user-text" class="text-input" placeholder="यहाँ टाइप करें...">
+                <button class="submit-btn" id="submit-text-btn">सबमिट करें</button>
+            </div>
+        </div>
+
+        <div class="footer-nav">
+            <button class="nav-item active">होम</button>
+            <button class="nav-item">टास्क</button>
+            <button class="nav-item">प्रोफाइल</button>
+        </div>
+        
+    </div>
+
+    <script>
+        // पॉइंट्स और बटन को कोड से जोड़ना
+        let points = 100;
+        const pointsDisplay = document.getElementById('points-display');
+        const dailyBtn = document.getElementById('daily-claim-btn');
+        
+        // टाइप करने वाले बॉक्स और सबमिट बटन को जोड़ना
+        const submitBtn = document.getElementById('submit-text-btn');
+        const userInput = document.getElementById('user-text');
+
+        // जब यूजर रोजाना वाले बटन पर क्लिक करेगा
+        dailyBtn.addEventListener('click', () => {
+            points += 50;
+            pointsDisplay.textContent = points;
+            dailyBtn.disabled = true;
+            dailyBtn.textContent = "आज का इनाम मिल गया!";
+            dailyBtn.style.background = "#333";
+            dailyBtn.style.boxShadow = "none";
+            dailyBtn.style.color = "#888";
+            alert("बधाई हो! आपको 50 पॉइंट्स मिले।");
+        });
+
+        // नया: जब यूजर टाइप करके सबमिट बटन दबाएगा
+        submitBtn.addEventListener('click', () => {
+            const textValue = userInput.value.trim();
+            
+            if (textValue === "") {
+                alert("कृपया पहले बॉक्स में कुछ टाइप करें!");
+            } else {
+                alert("आपने लिखा: " + textValue + "\nजानकारी सुरक्षित कर ली गई है!");
+                userInput.value = ""; // सबमिट होने के बाद बॉक्स को खाली कर देगा
+            }
+        });
+    </script>
+</body>
+</html>
 
