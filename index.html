@@ -2,259 +2,41 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra Reward App</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ultra Sigma - Bihar Battle</title>
     <style>
-        /* पूरे पेज की सेटिंग */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #0d0e15;
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+        body { margin: 0; background: #050508; color: white; overflow: hidden; font-family: sans-serif; }
+        #game-screen { width: 100vw; height: 100vh; background: url('https://i.imgur.com/your_map_image.jpg') center/cover; position: relative; }
 
-        /* मोबाइल स्क्रीन का साइज और बैकग्राउंड */
-        .app-container {
-            width: 100%;
-            max-width: 450px;
-            height: 100vh;
-            background: linear-gradient(180deg, #141622 0%, #0d0e15 100%);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
+        /* सभी बटन्स की जगह */
+        .btn { position: absolute; border: 2px solid white; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; user-select: none; }
+        
+        #fire-btn { bottom: 50px; right: 50px; width: 100px; height: 100px; background: #ff007f; }
+        #glow-wall { bottom: 150px; right: 200px; width: 70px; height: 70px; background: #00f2fe; }
+        #medkit { bottom: 50px; right: 200px; width: 70px; height: 70px; background: #00ff00; }
+        #gun-switch { top: 20px; right: 20px; width: 60px; height: 60px; background: #333; }
 
-        /* --- लॉगिन स्क्रीन की सजावट --- */
-        .login-screen {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 30px;
-        }
-
-        .login-screen h1 {
-            color: #00f2fe;
-            font-size: 32px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 15px #00f2fe;
-        }
-
-        .login-screen p {
-            color: #888888;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-
-        .input-group {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 14px;
-            color: #00f2fe;
-            margin-bottom: 8px;
-        }
-
-        .login-input {
-            width: 90%;
-            padding: 14px;
-            background: #141622;
-            border: 1px solid #1e2235;
-            border-radius: 10px;
-            color: #ffffff;
-            font-size: 15px;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        .login-input:focus {
-            border-color: #00f2fe;
-            box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
-        }
-
-        /* --- मुख्य ऐप स्क्रीन --- */
-        .main-app-screen {
-            display: none; /* लॉगिन के बाद खुलेगी */
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .header {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #00f2fe;
-        }
-
-        .header h2 {
-            margin: 0;
-            font-size: 24px;
-            color: #00f2fe;
-            text-shadow: 0 0 10px #00f2fe;
-        }
-
-        .balance-box {
-            background: #1e2235;
-            padding: 8px 15px;
-            border-radius: 20px;
-            border: 1px solid #00f2fe;
-        }
-
-        #points-display {
-            color: #4facfe;
-            font-size: 18px;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .welcome-text {
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        /* चमकदार नियॉन बटन */
-        .reward-btn {
-            background: linear-gradient(45deg, #00f2fe, #4facfe);
-            color: #000000;
-            border: none;
-            padding: 15px 30px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 0 15px #00f2fe;
-            transition: 0.3s;
-            width: 80%;
-            text-align: center;
-        }
-
-        .reward-btn:active {
-            transform: scale(0.95);
-        }
-
-        .footer-nav {
-            height: 60px;
-            background: #141622;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-top: 1px solid #1e2235;
-        }
-
-        .nav-item {
-            background: none;
-            border: none;
-            color: #888888;
-            font-size: 14px;
-        }
-
-        .nav-item.active {
-            color: #00f2fe;
-            font-weight: bold;
-        }
+        #char { position: absolute; bottom: 50px; left: 20%; width: 150px; }
+        #ui-top { top: 10px; left: 10px; font-size: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        
-        <div class="login-screen" id="login-box">
-            <h1>Ultra Reward</h1>
-            <p>आगे बढ़ने के लिए लॉगिन करें</p>
+<div id="game-screen">
+    <div id="ui-top">HP: 200 | RANK: Level 1</div>
+    
+    <img id="char" src="APKE_CHARACTER_KA_LINK" alt="Character">
 
-            <div class="input-group">
-                <label>आपका नाम</label>
-                <input type="text" id="username" class="login-input" placeholder="यहाँ नाम लिखें...">
-            </div>
+    <div id="fire-btn" class="btn" onclick="alert('FIRE!')">FIRE</div>
+    <div id="glow-wall" class="btn" onclick="alert('Glow Wall!')">WALL</div>
+    <div id="medkit" class="btn" onclick="alert('Healing!')">MED</div>
+    <div id="gun-switch" class="btn" onclick="alert('Switch Gun')">GUN</div>
+</div>
 
-            <div class="input-group">
-                <label>पासवर्ड</label>
-                <input type="password" id="password" class="login-input" placeholder="यहाँ पासवर्ड लिखें...">
-            </div>
+<script>
+    // भविष्य में यहाँ हम गेम का असली लॉजिक जोड़ेंगे
+    console.log("Ultra Sigma Game Loaded!");
+</script>
 
-            <button class="reward-btn" id="login-btn" style="margin-top: 10px;">लॉगिन करें</button>
-        </div>
-
-        <div class="main-app-screen" id="main-app">
-            <div class="header">
-                <h2>Ultra Reward</h2>
-                <div class="balance-box">
-                    <span>पॉइंट्स: </span>
-                    <strong id="points-display">100</strong>
-                </div>
-            </div>
-
-            <div class="main-content">
-                <p class="welcome-text" id="user-welcome">नमस्ते! आपका स्वागत है।</p>
-                <button class="reward-btn" id="daily-claim-btn">रोजाना का इनाम (+50 पॉइंट्स)</button>
-            </div>
-
-            <div class="footer-nav">
-                <button class="nav-item active">होम</button>
-                <button class="nav-item">टास्क</button>
-                <button class="nav-item">प्रोफाइल</button>
-            </div>
-        </div>
-        
-    </div>
-
-    <script>
-        const loginBox = document.getElementById('login-box');
-        const mainApp = document.getElementById('main-app');
-        const loginBtn = document.getElementById('login-btn');
-        const usernameInput = document.getElementById('username');
-        const passwordInput = document.getElementById('password');
-        const userWelcome = document.getElementById('user-welcome');
-
-        let points = 100;
-        const pointsDisplay = document.getElementById('points-display');
-        const dailyBtn = document.getElementById('daily-claim-btn');
-
-        // लॉगिन बटन पर क्लिक करने पर
-        loginBtn.addEventListener('click', () => {
-            const name = usernameInput.value.trim();
-            const pass = passwordInput.value.trim();
-
-            if (name === "" || pass === "") {
-                alert("कृपया नाम और पासवर्ड दोनों भरें!");
-            } else {
-                loginBox.style.display = "none";
-                mainApp.style.display = "flex";
-                userWelcome.textContent = "नमस्ते " + name + "! टास्क पूरे करें और इनाम जीतें।";
-            }
-        });
-
-        // इनाम वाले बटन पर क्लिक करने पर
-        dailyBtn.addEventListener('click', () => {
-            points += 50;
-            pointsDisplay.textContent = points;
-            dailyBtn.disabled = true;
-            dailyBtn.textContent = "आज का इनाम मिल गया!";
-            dailyBtn.style.background = "#333";
-            dailyBtn.style.boxShadow = "none";
-            dailyBtn.style.color = "#888";
-            alert("बधाई हो! आपको 50 पॉइंट्स मिले।");
-        });
-    </script>
 </body>
 </html>
